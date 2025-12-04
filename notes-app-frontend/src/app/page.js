@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, Plus, Edit2, Trash2, LogOut, Save, X } from 'lucide-react';
 
-const API_URL = 'https://notes-app-1-joyq.onrender.com';
+const API_URL = 'http://localhost:8080/api';
 
 export default function NotesApp() {
   const [currentView, setCurrentView] = useState('signin');
