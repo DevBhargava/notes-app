@@ -54,7 +54,7 @@ export default function NotesApp() {
 
     try {
       const response = await fetch(`${API_URL}/notes`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` }
       });
 
       if (!response.ok) throw new Error('Failed to fetch notes');
@@ -71,7 +71,7 @@ export default function NotesApp() {
       showMessage('Please fill all fields');
       return;
     }
-    
+
     setLoading(true);
     try {
       const response = await fetch(`${API_URL}/auth/signup`, {
@@ -153,7 +153,7 @@ export default function NotesApp() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
           title: noteForm.title,
@@ -183,7 +183,7 @@ export default function NotesApp() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
           title: noteForm.title,
@@ -213,7 +213,7 @@ export default function NotesApp() {
     try {
       const response = await fetch(`${API_URL}/notes/${id}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` }
       });
 
       if (!response.ok) throw new Error('Failed to delete note');
@@ -249,7 +249,9 @@ export default function NotesApp() {
             Notes App
           </h1>
           <p className="text-gray-600 mb-6 text-center">
-            {currentView === 'signin' ? 'Sign in to your account' : 'Create a new account'}
+            {currentView === 'signin'
+              ? 'Sign in to your account'
+              : 'Create a new account'}
           </p>
 
           {error && (
@@ -268,49 +270,79 @@ export default function NotesApp() {
           <div>
             {currentView === 'signup' && (
               <div className="mb-4">
-                <label className="block text-gray-700 font-medium mb-2">Name</label>
+                <label className="block text-gray-700 font-medium mb-2">
+                  Name
+                </label>
                 <input
                   type="text"
                   value={authForm.name}
-                  onChange={(e) => setAuthForm({ ...authForm, name: e.target.value })}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSignUp()}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onChange={(e) =>
+                    setAuthForm({ ...authForm, name: e.target.value })
+                  }
+                  onKeyPress={(e) =>
+                    e.key === 'Enter' && handleSignUp()
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 caret-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter your name"
                 />
               </div>
             )}
 
             <div className="mb-4">
-              <label className="block text-gray-700 font-medium mb-2">Email</label>
+              <label className="block text-gray-700 font-medium mb-2">
+                Email
+              </label>
               <input
                 type="email"
                 value={authForm.email}
-                onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
-                onKeyPress={(e) => e.key === 'Enter' && (currentView === 'signin' ? handleSignIn() : handleSignUp())}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={(e) =>
+                  setAuthForm({ ...authForm, email: e.target.value })
+                }
+                onKeyPress={(e) =>
+                  e.key === 'Enter'
+                    ? currentView === 'signin'
+                      ? handleSignIn()
+                      : handleSignUp()
+                    : null
+                }
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 caret-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your email"
               />
             </div>
 
             <div className="mb-4">
-              <label className="block text-gray-700 font-medium mb-2">Password</label>
+              <label className="block text-gray-700 font-medium mb-2">
+                Password
+              </label>
               <input
                 type="password"
                 value={authForm.password}
-                onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
-                onKeyPress={(e) => e.key === 'Enter' && (currentView === 'signin' ? handleSignIn() : handleSignUp())}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={(e) =>
+                  setAuthForm({ ...authForm, password: e.target.value })
+                }
+                onKeyPress={(e) =>
+                  e.key === 'Enter'
+                    ? currentView === 'signin'
+                      ? handleSignIn()
+                      : handleSignUp()
+                    : null
+                }
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 caret-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your password"
               />
             </div>
 
             {currentView === 'signup' && (
               <div className="mb-6">
-                <label className="block text-gray-700 font-medium mb-2">Role</label>
+                <label className="block text-gray-700 font-medium mb-2">
+                  Role
+                </label>
                 <select
                   value={authForm.role}
-                  onChange={(e) => setAuthForm({ ...authForm, role: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onChange={(e) =>
+                    setAuthForm({ ...authForm, role: e.target.value })
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 caret-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="USER">User</option>
                   <option value="ADMIN">Admin</option>
@@ -323,7 +355,11 @@ export default function NotesApp() {
               disabled={loading}
               className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400 font-medium"
             >
-              {loading ? 'Please wait...' : currentView === 'signin' ? 'Sign In' : 'Sign Up'}
+              {loading
+                ? 'Please wait...'
+                : currentView === 'signin'
+                ? 'Sign In'
+                : 'Sign Up'}
             </button>
           </div>
 
@@ -405,29 +441,40 @@ export default function NotesApp() {
               <h2 className="text-xl font-semibold">
                 {noteForm.id ? 'Edit Note' : 'Create Note'}
               </h2>
-              <button onClick={cancelForm} className="text-gray-500 hover:text-gray-700">
+              <button
+                onClick={cancelForm}
+                className="text-gray-500 hover:text-gray-700"
+              >
                 <X className="w-6 h-6" />
               </button>
             </div>
-            
+
             <div>
               <div className="mb-4">
-                <label className="block text-gray-700 font-medium mb-2">Title</label>
+                <label className="block text-gray-700 font-medium mb-2">
+                  Title
+                </label>
                 <input
                   type="text"
                   value={noteForm.title}
-                  onChange={(e) => setNoteForm({ ...noteForm, title: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onChange={(e) =>
+                    setNoteForm({ ...noteForm, title: e.target.value })
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 caret-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter note title"
                 />
               </div>
 
               <div className="mb-4">
-                <label className="block text-gray-700 font-medium mb-2">Description</label>
+                <label className="block text-gray-700 font-medium mb-2">
+                  Description
+                </label>
                 <textarea
                   value={noteForm.description}
-                  onChange={(e) => setNoteForm({ ...noteForm, description: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-32"
+                  onChange={(e) =>
+                    setNoteForm({ ...noteForm, description: e.target.value })
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 caret-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 h-32"
                   placeholder="Enter note description"
                 />
               </div>
@@ -466,7 +513,9 @@ export default function NotesApp() {
               {notes.map((note) => (
                 <div key={note.id} className="p-6 hover:bg-gray-50 transition">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-semibold text-gray-800">{note.title}</h3>
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      {note.title}
+                    </h3>
                     <div className="flex gap-2">
                       <button
                         onClick={() => startEdit(note)}
